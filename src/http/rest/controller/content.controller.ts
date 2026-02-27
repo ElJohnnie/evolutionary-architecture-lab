@@ -19,6 +19,8 @@ import { ContentManagementService } from '@src/core/service/content-management.s
 import { MediaPlayerService } from '@src/core/service/media-player.service';
 import { CreateVideoResponseDto } from '@src/http/rest/dto/response/create-video-response.dto';
 import { RestResponseInterceptor } from '@src/http/rest/interceptor/rest-response.interceptor';
+import { plainToInstance } from 'class-transformer';
+import { validate } from 'class-validator';
 import { randomUUID } from 'crypto';
 import { Request, Response } from 'express';
 import fs from 'fs';

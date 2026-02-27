@@ -1,5 +1,5 @@
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -8,13 +8,18 @@ datasource db {
 }
 
 model Video {
-  id        String   @id
-  title     String
-  description String
-  url       String
-  sizeInKb  Int
-  duration  Int
+  id           String   @id
+  title        String
+  description  String
+  url          String
+  sizeInKb     Int
+  duration     Int
   thumbnailUrl String?
-  createdAt DateTime
-  updatedAt DateTime
+  createdAt    DateTime
+  updatedAt    DateTime
+}
+
+enum Content_type_enum {
+  MOVIE
+  TV_SHOW
 }
