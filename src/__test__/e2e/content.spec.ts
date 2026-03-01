@@ -1,7 +1,6 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '@src/app.module';
-import { ContentRepository } from '@src/persistence/repository/content.repository';
 import { VideoRepository } from '@src/persistence/repository/video.repository';
 import fs from 'fs';
 import request from 'supertest';
