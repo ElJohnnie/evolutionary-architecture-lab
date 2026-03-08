@@ -15,10 +15,14 @@ export const movieDbSchema = z.object({
   apiToken: z.string(),
   url: z.string(),
 });
+const billingApiSchema = z.object({
+  url: z.string(),
+});
 
 export const configSchema = z.object({
   env: environmentSchema,
   port: z.coerce.number().positive().int(),
   database: databaseSchema,
   movieDb: movieDbSchema,
+  billingApi: billingApiSchema,
 });
