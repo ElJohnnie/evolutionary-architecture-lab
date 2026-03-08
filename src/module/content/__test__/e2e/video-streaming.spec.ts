@@ -1,6 +1,5 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
-import { Test, TestingModule } from '@nestjs/testing';
-import { AppModule } from '@src/app.module';
+import { TestingModule } from '@nestjs/testing';
 import { ContentManagementService } from '@contentModule/core/service/content-management.service';
 
 import fs from 'fs';
@@ -9,6 +8,8 @@ import nock, { cleanAll } from 'nock';
 import { VideoRepository } from '@contentModule/persistence/repository/video.repository';
 import { MovieRepository } from '@contentModule/persistence/repository/movie.repository';
 import { ContentRepository } from '@contentModule/persistence/repository/content.repository';
+import { ContentModule } from '@contentModule/content.module';
+import { createNestApp } from '@testInfra/test-e2e.setup';
 
 describe('ContentController (e2e)', () => {
   let module: TestingModule;
@@ -19,12 +20,9 @@ describe('ContentController (e2e)', () => {
   let contentManagementService: ContentManagementService;
 
   beforeAll(async () => {
-    module = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
-
-    app = module.createNestApplication();
-    await app.init();
+    const nestTestSetup = await createNestApp([ContentModule]);
+    app = nestTestSetup.app;
+    module = nestTestSetup.module;
 
     contentManagementService = module.get<ContentManagementService>(
       ContentManagementService,
