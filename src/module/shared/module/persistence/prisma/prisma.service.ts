@@ -14,6 +14,7 @@ export class PrismaService
   implements OnModuleInit, OnModuleDestroy, OnApplicationShutdown
 {
   private logger = new Logger(PrismaService.name);
+  subscription: any;
 
   constructor(private configService: ConfigService) {
     super({

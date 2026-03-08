@@ -6,6 +6,10 @@ import { UserRepository } from '@identityModule/persistence/repository/user.repo
 import request from 'supertest';
 import { createNestApp } from '@testInfra/test-e2e.setup';
 import { IdentityModule } from '@identityModule/identity.module';
+import { testDbClient } from '@testInfra/knex.database';
+import { planFactory } from '@testInfra/factory/identity/plan.test-factory';
+import { subscriptionFactory } from '@testInfra/factory/identity/subscription.test-factory';
+import { Tables } from '@testInfra/enum/table.enum';
 
 describe('AuthResolver (e2e)', () => {
   let app: INestApplication;
@@ -26,9 +30,13 @@ describe('AuthResolver (e2e)', () => {
 
   beforeEach(async () => {
     await userRepository.clear();
+    await testDbClient(Tables.Subscription).del();
+    await testDbClient(Tables.Plan).del();
   });
   afterAll(async () => {
     await userRepository.clear();
+    await testDbClient(Tables.Subscription).del();
+    await testDbClient(Tables.Plan).del();
     await module.close();
   });
 
@@ -38,7 +46,7 @@ describe('AuthResolver (e2e)', () => {
         email: 'johndoe@example.com',
         password: 'password123',
       };
-      await userManagementService.create(
+      const createdUser = await userManagementService.create(
         UserModel.create({
           firstName: 'John',
           lastName: 'Doe',
@@ -46,6 +54,15 @@ describe('AuthResolver (e2e)', () => {
           password: signInInput.password,
         }),
       );
+
+      const plan = planFactory.build();
+      const subscription = subscriptionFactory.build({
+        planId: plan.id,
+        status: 'ACTIVE' as any,
+        userId: createdUser.id,
+      });
+      await testDbClient(Tables.Plan).insert(plan);
+      await testDbClient(Tables.Subscription).insert(subscription);
 
       const response = await request(app.getHttpServer())
         .post('/graphql')
@@ -95,7 +112,7 @@ describe('AuthResolver (e2e)', () => {
         email: 'johndoe@example.com',
         password: 'password123',
       };
-      await userManagementService.create(
+      const createdUser = await userManagementService.create(
         UserModel.create({
           firstName: 'John',
           lastName: 'Doe',
@@ -103,6 +120,15 @@ describe('AuthResolver (e2e)', () => {
           password: signInInput.password,
         }),
       );
+
+      const plan = planFactory.build();
+      const subscription = subscriptionFactory.build({
+        planId: plan.id,
+        status: 'ACTIVE' as any,
+        userId: createdUser.id,
+      });
+      await testDbClient(Tables.Plan).insert(plan);
+      await testDbClient(Tables.Subscription).insert(subscription);
 
       const acessTokenResponse = await request(app.getHttpServer())
         .post('/graphql')
