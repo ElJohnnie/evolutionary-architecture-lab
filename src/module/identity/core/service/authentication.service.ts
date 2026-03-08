@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { UserUnauthorizedException } from '@identityModule/core/exception/user-unauthorized.exception';
 import { UserRepository } from '@identityModule/persistence/repository/user.repository';
+import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
 
 // TODO: move this to a .env file and config
