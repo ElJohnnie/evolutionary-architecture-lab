@@ -2,7 +2,7 @@ import { ContentManagementService } from '@contentModule/core/service/content-ma
 import { MediaPlayerService } from '@contentModule/core/service/media-player.service';
 import { ExternalMovieClient } from '@contentModule/http/rest/client/external-movie-rating/external-movie-rating.client';
 import { MediaPlayerController } from '@contentModule/http/rest/controller/media-player.controller';
-import { VideoUploadController } from '@contentModule/http/rest/controller/video-upload.controller';
+import { AdminMovieController } from '@contentModule/http/rest/controller/admin-movie.controller';
 import { PersistenceModule } from '@contentModule/persistence/persistence.module';
 import { ContentRepository } from '@contentModule/persistence/repository/content.repository';
 import { VideoRepository } from '@contentModule/persistence/repository/video.repository';
@@ -16,7 +16,7 @@ import { HttpClientModule } from '@sharedModules/http-client/http-client.module'
     ConfigModule.forRoot(),
     HttpClientModule,
   ],
-  controllers: [VideoUploadController, MediaPlayerController],
+  controllers: [AdminMovieController, MediaPlayerController],
   providers: [
     ContentManagementService,
     MediaPlayerService,

@@ -19,14 +19,14 @@ import { Request } from 'express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 
-@Controller('content')
-export class VideoUploadController {
+@Controller('admin')
+export class AdminMovieController {
   constructor(
     private readonly contentManagementService: ContentManagementService,
     private readonly mediaPlayerService: MediaPlayerService,
   ) {}
 
-  @Post('video')
+  @Post('movie')
   @HttpCode(HttpStatus.CREATED)
   @UseInterceptors(
     FileFieldsInterceptor(
@@ -60,7 +60,7 @@ export class VideoUploadController {
     ),
   )
   @UseInterceptors(new RestResponseInterceptor(CreateVideoResponseDto))
-  async uploadVideo(
+  async uploadMovie(
     @Req() _req: Request,
     @Body()
     contentData: {

@@ -10,6 +10,8 @@ import { MovieRepository } from '@contentModule/persistence/repository/movie.rep
 import { ContentRepository } from '@contentModule/persistence/repository/content.repository';
 import { ContentModule } from '@contentModule/content.module';
 import { createNestApp } from '@testInfra/test-e2e.setup';
+import { testDbClient } from '@testInfra/knex.database';
+import { Tables } from '@testInfra/enum/table.enum';
 
 describe('ContentController (e2e)', () => {
   let module: TestingModule;
@@ -39,9 +41,9 @@ describe('ContentController (e2e)', () => {
   });
 
   afterEach(async () => {
-    await videoRepository.deleteAll();
-    await movieRepository.deleteAll();
-    await contentRepository.deleteAll();
+    await testDbClient(Tables.Video).del();
+    await testDbClient(Tables.Movie).del();
+    await testDbClient(Tables.Content).del();
     cleanAll();
   });
 
