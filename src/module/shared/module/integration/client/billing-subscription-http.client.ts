@@ -1,10 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@sharedModules/config/service/config.service';
 import { HttpClient } from '@sharedModules/http-client/client/http.client';
-import {
-  BillingApiSubscriptionStatus,
-  BillingApiSubscriptionStatusResponseDto,
-} from '@sharedModules/integration/http/dto/response/billing-api-subscription-status-response.dto';
+import { BillingApiUserSubscriptionActiveResponseDto } from '@sharedModules/integration/http/dto/response/billing-api-subscription-status-response.dto';
 
 import { BillingSubscriptionStatusApi } from '@sharedModules/integration/interface/billing-integration.interface';
 
@@ -27,16 +24,14 @@ export class BillingSubscriptionHttpClient
     };
     const url = `${
       this.configService.get('billingApi').url
-    }/subscription/user/${userId}`;
+    }/subscription/user/${userId}/active`;
 
-    const response =
-      await this.httpClient.get<BillingApiSubscriptionStatusResponseDto>(
+    const { isActive } =
+      await this.httpClient.get<BillingApiUserSubscriptionActiveResponseDto>(
         url,
         options,
       );
 
-    return response.status === BillingApiSubscriptionStatus.Active
-      ? true
-      : false;
+    return isActive;
   }
 }

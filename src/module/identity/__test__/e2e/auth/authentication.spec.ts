@@ -43,7 +43,7 @@ describe('AuthResolver (e2e)', () => {
 
   describe('signIn mutation', () => {
     //this is an example of HTTP call between modules
-    it('returns the authenticated user - USING HTTP for module to module calls', async () => {
+    it.skip('returns the authenticated user - USING HTTP for module to module calls', async () => {
       const signInInput = {
         email: 'johndoe@example.com',
         password: 'password123',
@@ -102,7 +102,7 @@ describe('AuthResolver (e2e)', () => {
 
       expect(email).toEqual(signInInput.email);
     });
-    it.skip('returns accessToken for valid credentials', async () => {
+    it('returns accessToken for valid credentials', async () => {
       const signInInput = {
         email: 'johndoe@example.com',
         password: 'password123',
@@ -169,7 +169,7 @@ describe('AuthResolver (e2e)', () => {
   });
   describe('getProfile query', () => {
     //use local module call instead of HTTP
-    it.skip('returns the authenticated user', async () => {
+    it('returns the authenticated user', async () => {
       const signInInput = {
         email: 'johndoe@example.com',
         password: 'password123',
