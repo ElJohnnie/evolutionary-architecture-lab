@@ -21,6 +21,10 @@ export const factory = (): Config => {
     billingApi: {
       url: process.env.BILLING_API_URL,
     },
+    geminiApi: {
+      apiKey: process.env.GEMINI_API_KEY,
+      url: process.env.GEMINI_API_URL,
+    },
   });
 
   if (result.success) {

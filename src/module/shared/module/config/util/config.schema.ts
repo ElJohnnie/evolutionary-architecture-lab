@@ -19,10 +19,16 @@ const billingApiSchema = z.object({
   url: z.string(),
 });
 
+const geminiApiSchema = z.object({
+  apiKey: z.string(),
+  url: z.string(),
+});
+
 export const configSchema = z.object({
   env: environmentSchema,
   port: z.coerce.number().positive().int(),
   database: databaseSchema,
   movieDb: movieDbSchema,
   billingApi: billingApiSchema,
+  geminiApi: geminiApiSchema,
 });
