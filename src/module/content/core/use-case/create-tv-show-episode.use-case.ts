@@ -56,19 +56,26 @@ export class CreateTvShowEpisodeUseCase {
       sizeInKb: episodeData.videoSizeInKb,
     });
 
-    await Promise.all([
-      this.videoProcessorService.processMetadataAndModeration(video),
-      this.ageRecommendationService.setAgeRecommendationForContent(content),
+    Promise.all([
+      await this.videoProcessorService.processMetadataAndModeration(video),
+      await this.ageRecommendationService.setAgeRecommendationForContent(
+        content,
+      ),
     ]);
 
     episode.video = video;
-    return await runInTransaction(async () => {
-      await this.contentRepository.saveTvShow(content);
+    return await runInTransaction(
+      async () => {
+        await this.contentRepository.saveTvShow(content);
 
-      const savedEpisode = await this.episodeRepository.save(episode);
-      //If it fails the transaction is rolled back
-      await this.contentDistributionService.distributeContent(content.id);
-      return savedEpisode;
-    });
+        const savedEpisode = await this.episodeRepository.save(episode);
+        //If it fails the transaction is rolled back
+        await this.contentDistributionService.distributeContent(content.id);
+        return savedEpisode;
+      },
+      {
+        connectionName: 'content',
+      },
+    );
   }
 }
