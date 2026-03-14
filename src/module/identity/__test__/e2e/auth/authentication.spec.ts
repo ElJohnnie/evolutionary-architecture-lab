@@ -44,9 +44,6 @@ describe('AuthResolver (e2e)', () => {
       await testDbClient(Tables.User).insert(user);
       nock('https://localhost:3000', {
         encodedQueryParams: true,
-        reqheaders: {
-          Authorization: (): boolean => true,
-        },
       })
         .defaultReplyHeaders({ 'access-control-allow-origin': '*' })
         .get(`/subscription/user/${user.id}/active`)

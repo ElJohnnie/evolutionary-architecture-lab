@@ -19,11 +19,17 @@ import { PersistenceModule } from '@contentModule/persistence/persistence.module
 import { ContentRepository } from '@contentModule/persistence/repository/content.repository';
 import { VideoRepository } from '@contentModule/persistence/repository/video.repository';
 import { Module } from '@nestjs/common';
+import { AuthModule } from '@sharedModules/auth/auth.module';
 import { ConfigModule } from '@sharedModules/config/config.module';
 import { HttpClientModule } from '@sharedModules/http-client/http-client.module';
 
 @Module({
-  imports: [PersistenceModule, ConfigModule.forRoot(), HttpClientModule],
+  imports: [
+    PersistenceModule,
+    ConfigModule.forRoot(),
+    HttpClientModule,
+    AuthModule,
+  ],
   controllers: [
     AdminMovieController,
     MediaPlayerController,
