@@ -1,4 +1,4 @@
-import { planFactory } from '@billingModule/__test__/factory/identity/plan.test-factory';
+import { planFactory } from '@billingModule/__test__/factory/plan.factory';
 import { BillingModule } from '@billingModule/billing.module';
 import { PlanInterval } from '@billingModule/core/enum/plan-interval.enum';
 import { SubscriptionStatus } from '@billingModule/core/enum/subscription-status.enum';

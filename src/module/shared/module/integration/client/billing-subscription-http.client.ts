@@ -4,7 +4,6 @@ import { HttpClient } from '@sharedModules/http-client/client/http.client';
 import { BillingApiUserSubscriptionActiveResponseDto } from '@sharedModules/integration/http/dto/response/billing-api-subscription-status-response.dto';
 
 import { BillingSubscriptionStatusApi } from '@sharedModules/integration/interface/billing-integration.interface';
-import { ClsService } from 'nestjs-cls';
 
 @Injectable()
 export class BillingSubscriptionHttpClient
@@ -13,7 +12,7 @@ export class BillingSubscriptionHttpClient
   constructor(
     private readonly httpClient: HttpClient,
     private readonly configService: ConfigService,
-\  ) {}
+  ) {}
 
   async isUserSubscriptionActive(userId: string): Promise<boolean> {
     const options = {

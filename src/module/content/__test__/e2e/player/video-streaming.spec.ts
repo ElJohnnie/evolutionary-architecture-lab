@@ -1,7 +1,7 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { TestingModule } from '@nestjs/testing';
 
-import { CONTENT_TEST_FIXTURES } from '@contentModule/__test__/constants';
+import { CONTENT_TEST_FIXTURES } from '@contentModule/__test__/test.constant';
 import { ContentModule } from '@contentModule/content.module';
 import { CreateMovieUseCase } from '@contentModule/core/use-case/create-movie.use-case';
 import { faker } from '@faker-js/faker';
