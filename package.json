@@ -18,11 +18,13 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest.e2e.ts --runInBand",
-    "content:db:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate database/content/typeorm/migrations/migration  -d ./database/content/typeorm/migration.datasource.ts",
+    "db:reset": "./reset-table.sh",
+    "content:db:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate database/content/typeorm/migrations/migration -d ./database/content/typeorm/migration.datasource.ts",
     "content:db:migrate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d ./database/content/typeorm/migration.datasource.ts",
     "content:db:drop": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js schema:drop -d ./database/content/typeorm/migration.datasource.ts",
-    "identity:db:generate": "prisma migrate dev",
+    "identity:db:generate": "prisma generate",
     "identity:db:migrate": "prisma db push",
+    "identity:db:drop": "prisma migrate reset --force",
     "billing:db:generate": "drizzle-kit generate --config database/billing/drizzle/drizzle-migration.config.ts",
     "billing:db:migrate": "drizzle-kit migrate --config database/billing/drizzle/drizzle-migration.config.ts",
     "billing:db:push": "drizzle-kit push --config database/billing/drizzle/drizzle-migration.config.ts",
@@ -55,7 +57,6 @@
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.20",
     "typeorm-extension": "^3.5.1",
-    "typeorm-transactional": "^0.5.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

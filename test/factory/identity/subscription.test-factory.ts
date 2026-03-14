@@ -3,7 +3,6 @@ import {
   SubscriptionModel,
   SubscriptionStatus,
 } from '@src/module/billing/core/model/subscription.model';
-import { planFactory } from '@testInfra/factory/identity/plan.test-factory';
 import * as Factory from 'factory.ts';
 
 export const subscriptionFactory = Factory.Sync.makeFactory<SubscriptionModel>({
