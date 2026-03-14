@@ -1,24 +1,23 @@
+import { MovieContentModel } from '@contentModule/core/model/movie-content.model';
+import { TvShowContentModel } from '@contentModule/core/model/tv-show-content.model';
+import { AgeRecommendationService } from '@contentModule/core/service/age-recommendation.service';
+import { VideoMetadataService } from '@contentModule/core/service/video-metadata.service';
+import { VideoProfanityFilterService } from '@contentModule/core/service/video-profanity-filter.service';
+import { ExternalMovieClient } from '@contentModule/http/rest/client/external-movie-rating/external-movie-rating.client';
+import { CreateEpisodeRequestDto } from '@contentModule/http/rest/dto/request/create-episode-request.dto';
+import { Episode } from '@contentModule/persistence/entity/episode.entity';
+import { Movie } from '@contentModule/persistence/entity/movie.entity';
+import { Thumbnail } from '@contentModule/persistence/entity/thumbnail.entity';
+import { TvShow } from '@contentModule/persistence/entity/tv-show.entity';
+import { Video } from '@contentModule/persistence/entity/video.entity';
+import { ContentRepository } from '@contentModule/persistence/repository/content.repository';
+import { EpisodeRepository } from '@contentModule/persistence/repository/episode.repository';
 import {
   BadRequestException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { ContentType } from '@contentModule/core/enum/content-type.enum';
-import { ExternalMovieClient } from '@contentModule/http/rest/client/external-movie-rating/external-movie-rating.client';
-import { ContentRepository } from '@contentModule/persistence/repository/content.repository';
-import { Content } from '@contentModule/persistence/entity/content.entity';
-import { Movie } from '@contentModule/persistence/entity/movie.entity';
-import { Video } from '@contentModule/persistence/entity/video.entity';
-import { Thumbnail } from '@contentModule/persistence/entity/thumbnail.entity';
-import { TvShow } from '@contentModule/persistence/entity/tv-show.entity';
-import { Episode } from '@contentModule/persistence/entity/episode.entity';
-import { EpisodeRepository } from '@contentModule/persistence/repository/episode.repository';
-import { VideoMetadataService } from '@contentModule/core/service/video-metadata.service';
-import { VideoProfanityFilterService } from '@contentModule/core/service/video-profanity-filter.service';
-import { AgeRecommendationService } from '@contentModule/core/service/age-recommendation.service';
-import { CreateEpisodeRequestDto } from '@contentModule/http/rest/dto/request/create-episode-request.dto';
-import { MovieContentModel } from '@contentModule/core/model/movie-content.model';
-import { TvShowContentModel } from '@contentModule/core/model/tv-show-content.model';
+import { Transactional } from 'typeorm-transactional';
 
 export interface CreateMovieData {
   title: string;
@@ -89,6 +88,7 @@ export class ContentManagementService {
     return await this.contentRepository.saveTvShow(content);
   }
 
+  @Transactional()
   async createEpisode(
     contentId: string,
     episodeData: CreateEpisodeRequestDto & {

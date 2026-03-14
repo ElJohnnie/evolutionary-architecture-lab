@@ -4,6 +4,8 @@ import { DefaultEntity } from './entity/default.entity';
 import { TypeOrmMigrationService } from './service/typeorm-migration.service';
 import { ConfigModule } from '@sharedModules/config/config.module';
 import { ConfigService } from '@sharedModules/config/service/config.service';
+import { addTransactionalDataSource } from 'typeorm-transactional';
+import { DataSource } from 'typeorm';
 
 @Module({})
 export class TypeOrmPersistenceModule {
@@ -20,7 +22,7 @@ export class TypeOrmPersistenceModule {
           useFactory: async (configService) => {
             return {
               type: 'postgres',
-              logging: false,
+              logging: true,
               autoLoadEntities: false,
               synchronize: false,
               migrationsTableName: 'typeorm_migrations',
@@ -28,6 +30,13 @@ export class TypeOrmPersistenceModule {
               ...configService.get('database'),
               ...options,
             };
+          },
+          async dataSourceFactory(options) {
+            if (!options) {
+              throw new Error('Invalid options passed');
+            }
+
+            return addTransactionalDataSource(new DataSource(options));
           },
         }),
       ],
